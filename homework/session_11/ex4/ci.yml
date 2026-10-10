@@ -1,0 +1,24 @@
+name: CI - Login to GHCR
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  login:
+    name: Login to GitHub Container Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Đăng nhập vào GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
